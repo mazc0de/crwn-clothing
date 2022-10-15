@@ -36,29 +36,20 @@ const SignInForm = () => {
         event.preventDefault();
 
         try {
-            const response = await signInUserWithEmailPassword(email, password);
-            console.log(response);
+            await signInUserWithEmailPassword(email, password);
+            // console.log({ user });
             resetFormFields();
         } catch (error) {
-            switch (error.code) {
-                case "auth/wrong-password":
-                    alert("incorrect password for email");
-                    break;
-                case "auth/user-not-found":
-                    alert("no user associated with this email");
-                    break;
-                default:
-                    console.log(error);
-            }
+            console.log("user sign in failed", error);
+            alert("user sign in failed");
         }
     };
 
     const signInwithGoogle = async (event) => {
         // event.preventDefault() digunakan untuk menghilangkan perilaku default dari button yaitu submit, juga dapat ditambahkan attribute type="button" pada tag button
         event.preventDefault();
-        const { user } = await signInWithGooglePopup();
-        createUserDocumentFromAuth(user);
-        console.log({ user });
+        await signInWithGooglePopup();
+        // console.log({ user });
     };
     return (
         <div className="sign-up-container">
@@ -66,7 +57,7 @@ const SignInForm = () => {
             <span>Sign in with your email and password</span>
             <form onSubmit={handleSubmit}>
                 <FormInput label="Email" required type="email" onChange={handleChange} name="email" value={email} />
-                <FormInput label="Password" required type="password" onChange={handleChange} name="password" value={password} />
+                <FormInput label="Password" required type="password" onChange={handleChange} name="password" value={password} autoComplete="on" />
                 <div className="buttons-container">
                     <Button type="submit">Sign In</Button>
                     <Button buttonType="google" onClick={signInwithGoogle}>
