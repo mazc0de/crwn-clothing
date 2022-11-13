@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDanC1s8W9YJ2SH7Ga8Z7ahyyYijs5mNDw",
@@ -27,6 +27,46 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googlePro
 
 // firebase firestore
 export const db = getFirestore();
+
+// add SHOP_DATA to firestore
+// export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+//     const batch = writeBatch(db);
+//     const collectionRef = collection(db, collectionKey);
+
+//     objectsToAdd.forEach((object) => {
+//         const docRef = doc(collectionRef, object.title.toLowerCase());
+//         batch.set(docRef, object);
+//     });
+
+//     await batch.commit();
+//     console.log("done");
+// };
+
+export const getCategoriesAndDocuments = async () => {
+    const collectionRef = collection(db, "categories");
+    const q = query(collectionRef);
+
+    const querySnapshot = await getDocs(q);
+    const categoryMap = querySnapshot.docs.reduce((accumulator, docsSnapshot) => {
+        const { title, items } = docsSnapshot.data();
+        accumulator[title.toLowerCase()] = items;
+        return accumulator;
+    }, {});
+
+    // categoryMap result expected
+    // {
+    //     hats: {
+    //         title: "Hats";
+    //         items: [{}, {}];
+    //     },
+    //     sneakers: {
+    //         title: "Sneakers";
+    //         items: [{}, {}];
+    //     },
+    // }
+    return categoryMap;
+};
+
 export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
     // parameter additionalInformation diatas berguna untuk createUserWithEmailAndPassword, dimana kita tidak bisa mengambil displayName untuk dikirimkan ke firestore
     if (!userAuth) return;

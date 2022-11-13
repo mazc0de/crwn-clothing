@@ -1,11 +1,10 @@
 import { useState } from "react";
 
 import { createUserWithEmailPassword, createUserDocumentFromAuth } from "../../utils/firebase.utils";
-import Button from "../button/button.component";
 
+import { SignUpContainer } from "./sign-up.styles";
 import FormInput from "../form-input/form-input.component";
-
-import "./sign-up.style.scss";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 
 // constant form fields
 const defaultFormFields = {
@@ -58,7 +57,7 @@ const SignUpForm = () => {
         }
     };
     return (
-        <div className="sign-up-container">
+        <SignUpContainer>
             <h2>Don't have an account?</h2>
             <span>Sign Up with your email and password</span>
             <form onSubmit={handleSubmit}>
@@ -66,11 +65,11 @@ const SignUpForm = () => {
                 <FormInput label="Email" required type="email" onChange={handleChange} name="email" value={email} />
                 <FormInput label="Password" required type="password" onChange={handleChange} name="password" value={password} autoComplete="on" />
                 <FormInput label="Confirm Password" required type="password" onChange={handleChange} name="confirmPassword" value={confirmPassword} autoComplete="on" />
-                <Button type="submit" buttonType="inverted">
+                <Button type="submit" buttonType={BUTTON_TYPE_CLASSES.inverted}>
                     Sign Up
                 </Button>
             </form>
-        </div>
+        </SignUpContainer>
     );
 };
 

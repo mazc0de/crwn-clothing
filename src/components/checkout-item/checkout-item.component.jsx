@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import { CartContext } from "../../contexts/cart.context";
 
-import "./checkout-item.style.scss";
+import { CheckoutItemContainer } from "./checkout-item.styles";
 
 const CheckoutItem = ({ cartItem }) => {
     const { name, quantity, price, imageUrl } = cartItem;
@@ -14,7 +14,7 @@ const CheckoutItem = ({ cartItem }) => {
 
     return (
         <>
-            <div className="checkout-item-container">
+            <CheckoutItemContainer>
                 <div className="image-container">
                     <img src={imageUrl} alt={name} />
                 </div>
@@ -32,7 +32,7 @@ const CheckoutItem = ({ cartItem }) => {
                 <span className="remove-button" onClick={clearItemHandler}>
                     &#10005;
                 </span>
-            </div>
+            </CheckoutItemContainer>
         </>
     );
 };

@@ -1,9 +1,11 @@
-.checkout-item-container {
+import styled from "styled-components";
+
+export const CheckoutItemContainer = styled.div`
     width: 100%;
     display: flex;
     min-height: 100px;
-    border-bottom: 1px solid darkgray;
-    padding: 15px;
+    border-bottom: 1px solid darkgrey;
+    padding: 15px 0;
     font-size: 20px;
     align-items: center;
 
@@ -33,8 +35,9 @@
             margin: 0 10px;
         }
     }
+
     .remove-button {
         padding-left: 12px;
         cursor: pointer;
     }
-}
+`;
