@@ -41,20 +41,20 @@ export const UserProvider = ({ children }) => {
     const [{ currentUser }, dispatch] = useReducer(userReducer, INITIAL_STATE);
     // console.log(currentUser);
 
-    const setCurrentUser = (user) => {
-        dispatch(createAction(USER_ACTION_TYPES.SET_CURRENT_USER, user));
-    };
+    // move to redux
+    // const setCurrentUser = (user) => {
+    //     dispatch(createAction(USER_ACTION_TYPES.SET_CURRENT_USER, user));
+    // };
+    // useEffect(() => {
+    //     const unsubscribe = onAuthStateChangedListener((user) => {
+    //         if (user) {
+    //             createUserDocumentFromAuth(user);
+    //         }
+    //         setCurrentUser(user);
+    //     });
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChangedListener((user) => {
-            if (user) {
-                createUserDocumentFromAuth(user);
-            }
-            setCurrentUser(user);
-        });
-
-        return unsubscribe;
-    }, []);
+    //     return unsubscribe;
+    // }, []);
 
     const value = { currentUser };
 
